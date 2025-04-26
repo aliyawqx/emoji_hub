@@ -9,9 +9,21 @@ function EmojiList() {
   const [sortAZ, setSortAZ] = useState(false);
 
   useEffect(() => {
-    axios.get('/emoji')
-      .then(res => setEmojis(res.data))
-      .catch(err => console.error(err));
+    let retries = 3;
+    const fetchEmojis = () => {
+      axios.get('/emoji')
+        .then(res => setEmojis(res.data))
+        .catch(err => {
+          if (retries > 0) {
+            retries--;
+            setTimeout(fetchEmojis, 1000);
+          } else {
+            console.error('Failed to fetch emojis after multiple attempts:', err);
+          }
+        });
+    };
+  
+    fetchEmojis();
   }, []);
 
   const filtered = emojis
