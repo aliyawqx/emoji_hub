@@ -6,11 +6,11 @@ const app = express();
 const port = 5000;
 
 app.use(cors());
-app.use(express.json()); // To parse JSON in requests
+app.use(express.json());
 
-let userFavorites = {};  // Mock database
+let userFavorites = {}; 
 
-// Endpoint to get emojis
+
 app.get('/emoji', async (req, res) => {
   try {
     const response = await axios.get('https://emojihub.yurace.pro/api/all');
@@ -21,13 +21,13 @@ app.get('/emoji', async (req, res) => {
   }
 });
 
-// Endpoint to get favorites for a user
+
 app.get('/favorites/:userId', (req, res) => {
   const { userId } = req.params;
   res.json(userFavorites[userId] || []);
 });
 
-// Endpoint to add/remove emoji from favorites
+
 app.post('/favorites', (req, res) => {
   const { userId, emoji } = req.body;
 
