@@ -1,0 +1,39 @@
+.App {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #fbe9f7, #ffe0f0);
+  color: #333;
+  padding: 20px;
+  height: 100vh;
+  box-sizing: border-box; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+.navbar {
+  background-color: #ffaccd;
+  padding: 15px;
+  border-radius: 8px;
+  width: 95%;
+  text-align: center;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  padding: 10px;
+  margin: 0 ;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #ff99cc;
+}

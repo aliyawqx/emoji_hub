@@ -1,0 +1,15 @@
+{
+  "short_name": "EmojiHub",
+  "name": "Emoji Hub - Explore and Enjoy Emojis",
+  "icons": [
+    {
+      "src": "emoji-icon.png",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#f8bbd0",
+  "background_color": "#ffffff"
+}
