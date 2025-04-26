@@ -1,12 +1,10 @@
 import React from 'react';
-import EmojiBackground from '../components/EmojiBackground';
 import './Home.css';
 
 function Home() {
   return (
     <div className="home-container">
       {}
-      <EmojiBackground />
       
       <div className="center-content">
         <h1>Welcome to <br/> the Emoji Hub!</h1>
