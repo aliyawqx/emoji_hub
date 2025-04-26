@@ -16,7 +16,7 @@ function EmojiList() {
         .catch(err => {
           if (retries > 0) {
             retries--;
-            setTimeout(fetchEmojis, 1000);
+            setTimeout(fetchEmojis, 5000);
           } else {
             console.error('Failed to fetch emojis after multiple attempts:', err);
           }
@@ -34,6 +34,7 @@ function EmojiList() {
   return (
     <div className="container">
       <h1 className="title">Emoji Catalog</h1>
+      <h1>Hello world</h1>
 
       <div className="search-bar">
         <input
@@ -63,7 +64,7 @@ function EmojiList() {
         </button>
       </div>
 
-      <div className="emoji-grid">
+      {/* <div className="emoji-grid">
         {filtered.map((emoji, index) => (
           <div key={index} className="emoji-card">
             <div
@@ -79,7 +80,7 @@ function EmojiList() {
             </p>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
