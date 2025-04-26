@@ -7,7 +7,7 @@ ___
 Клонируйте репозиторий:
 
 ```
-git clone https://github.com/yourusername/emoji-hub.git
+git clone https://github.com/aliyawqx/emoji-hub.git
 ```
 Перейдите в папку с проектом:
 ```
@@ -22,6 +22,10 @@ npm install
 ```
 cd ../backend
 npm install
+```
+В корне папки backend создайте файл .env и добавьте туда ваш API ключ:
+```
+OPENAI_API_KEY=your_api_key_here
 ```
 Для запуска серверной части:
 ```
