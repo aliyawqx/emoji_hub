@@ -7,34 +7,58 @@ function EmojiList() {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
   const [sortAZ, setSortAZ] = useState(false);
+  const [favorites, setFavorites] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [noResults, setNoResults] = useState(false); 
 
   useEffect(() => {
     let retries = 3;
     const fetchEmojis = () => {
+      setLoading(true);
       axios.get('/emoji')
-        .then(res => setEmojis(res.data))
+        .then(res => {
+          setEmojis(res.data);
+          setLoading(false); 
+        })
         .catch(err => {
           if (retries > 0) {
             retries--;
             setTimeout(fetchEmojis, 5000);
           } else {
             console.error('Failed to fetch emojis after multiple attempts:', err);
+            setLoading(false); 
           }
         });
     };
-  
+
     fetchEmojis();
+
+    const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    setFavorites(storedFavorites);
   }, []);
+
+  const handleFavoriteToggle = (emoji) => {
+    const updatedFavorites = favorites.includes(emoji)
+      ? favorites.filter(fav => fav !== emoji)
+      : [...favorites, emoji];
+
+    setFavorites(updatedFavorites);
+
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+  };
 
   const filtered = emojis
     .filter(e => e.name.toLowerCase().includes(search.toLowerCase()))
-    .filter(e => (category ? e.category === category : true))
+    .filter(e => (category === 'Favorites' ? favorites.includes(e.name) : category ? e.category === category : true))
     .sort((a, b) => sortAZ ? a.name.localeCompare(b.name) : 0);
+
+  useEffect(() => {
+    setNoResults(filtered.length === 0 && !loading);
+  }, [filtered, loading]);
 
   return (
     <div className="container">
       <h1 className="title">Emoji Catalog</h1>
-      <h1>Hello world</h1>
 
       <div className="search-bar">
         <input
@@ -51,6 +75,7 @@ function EmojiList() {
           className="select-category"
         >
           <option value="">All Categories</option>
+          <option value="Favorites">favorites</option>
           {[...new Set(emojis.map(e => e.category))].map(cat => (
             <option key={cat} value={cat}>{cat}</option>
           ))}
@@ -64,7 +89,11 @@ function EmojiList() {
         </button>
       </div>
 
-      {/* <div className="emoji-grid">
+      {loading && <div className="loading-message">Loading...</div>}
+
+      {noResults && !loading && <div className="no-results-message">No results found</div>}
+
+      <div className="emoji-grid">
         {filtered.map((emoji, index) => (
           <div key={index} className="emoji-card">
             <div
@@ -78,9 +107,15 @@ function EmojiList() {
             <p className="emoji-group">
               <strong>Group:</strong> {emoji.group}
             </p>
+            <button
+              onClick={() => handleFavoriteToggle(emoji.name)}
+              className={`favorite-button ${favorites.includes(emoji.name) ? 'active' : ''}`}
+            >
+              {favorites.includes(emoji.name) ? 'Remove from Favorites' : 'Add to Favorites'}
+            </button>
           </div>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 }
